@@ -9,10 +9,9 @@
 <script>
   export default {
     name: "Banner",
-    // 获取轮播图的数据
     data() {
       return {
-        banner_list: [], // 轮播图的数据
+        banner_list: [],
       }
     },
     methods: {
@@ -22,7 +21,6 @@
           method: "get",
         }).then(res => {
           // 当前请求的返回值可以通过res接受到
-          console.log(res.data);
           this.banner_list = res.data;
         }).catch(error => {
           console.log(error);

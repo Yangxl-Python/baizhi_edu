@@ -30,4 +30,5 @@ urlpatterns = [
     path('x-admin/', xadmin.site.urls),
 
     path('home/', include('home.urls')),
+    path('user/', include('user.urls')),
 ]

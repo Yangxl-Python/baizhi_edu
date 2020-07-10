@@ -15,6 +15,8 @@ import settings from "./settings";
 
 import '../static/css/global.css'
 
+import '../static/js/gt'
+
 Vue.prototype.$axios = axios;
 
 Vue.use(Element);

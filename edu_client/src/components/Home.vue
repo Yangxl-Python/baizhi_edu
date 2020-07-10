@@ -1,14 +1,39 @@
 <template>
-  <Banner/>
+  <div>
+    <Header :nav_list="nav_list"/>
+    <Banner/>
+    <Footer :nav_list="nav_list"/>
+  </div>
 </template>
 
 <script>
   import Banner from "./common/Banner";
+  import Header from "./common/Header";
+  import Footer from "./common/Footer";
 
   export default {
     name: "Home",
     components: {
-      Banner: Banner
+      Banner: Banner,
+      Header: Header,
+      Footer: Footer
+    },
+    data() {
+      return {
+        nav_list: [],
+      }
+    },
+    methods: {
+      get_all_nav() {
+        this.$axios.get(this.$settings.HOST + 'home/nav/').then(res => {
+          this.nav_list = res.data;
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+    },
+    created() {
+      this.get_all_nav();
     }
   }
 </script>

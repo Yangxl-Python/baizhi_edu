@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'reversion',
 
     'home',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +92,7 @@ WSGI_APPLICATION = 'edu_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "edu_api",
+        'NAME': "edu_api_db",
         'HOST': "localhost",
         'PORT': 3306,
         'USER': "root",
@@ -135,8 +136,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_NAME = 'media'
+MEDIA_URL = f'/{MEDIA_NAME}/'
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_NAME)
 
 # 允许跨域请求
 CORS_ORIGIN_ALLOW_ALL = True
@@ -145,7 +147,29 @@ CORS_ORIGIN_ALLOW_ALL = True
 REST_FRAMEWORK = {
     # 全局异常配置
     "EXCEPTION_HANDLER": "utils.exceptions.exception_handler",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
 }
+
+# jwt配置
+JWT_AUTH = {
+    # 有效时间
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    # jwt响应格式
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+        # 'rest_framework_jwt.utils.jwt_response_payload_handler',
+        'user.utils.jwt_response_payload_handler',
+}
+
+AUTH_USER_MODEL = 'user.UserInfo'
+
+# 自定义多条件登录
+AUTHENTICATION_BACKENDS = [
+    'user.utils.UserAuthBackend'
+]
 
 # 项目的日志配置
 LOGGING = {

@@ -3,12 +3,15 @@
     <div class="header">
       <div class="content">
         <div class="logo full-left">
-          <router-link to="/"><img src="../../static/image/logo.png" alt="百知教育"></router-link>
+          <router-link to="/"><img src="../../../static/image/logo.png" alt="百知教育"></router-link>
         </div>
         <ul class="nav full-left">
           <li v-for="(nav, index) in nav_list" v-if="nav.position === 1" :key="index">
-            <span>
+            <span v-if="nav.is_site">
               <a :href="nav.link">{{nav.title}}</a>
+            </span>
+            <span v-else>
+              <router-link :to="nav.link">{{nav.title}}</router-link>
             </span>
           </li>
         </ul>
@@ -17,8 +20,13 @@
             <img src="/static/image/cart.svg" alt="">
             <span><router-link to="/cart">购物车</router-link></span>
           </div>
-          <div class="login-box full-left">
-            <span>登录</span>
+          <div class="login-box full-left" v-if="token">
+            <router-link to="/login">个人中心</router-link>
+            &nbsp;|&nbsp;
+            <span><a href="javascript:void(0);" @click="logout">退出登录</a></span>
+          </div>
+          <div class="login-box full-left" v-else>
+            <router-link to="/login">登录</router-link>
             &nbsp;|&nbsp;
             <span>注册</span>
           </div>
@@ -32,6 +40,24 @@
   export default {
     name: "Header",
     props: ['nav_list'],
+    data() {
+      return{
+        token: '',
+      }
+    },
+    methods: {
+      get_token() {
+        this.token = localStorage.getItem('token') || localStorage.getItem('token');
+      },
+      logout() {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        this.get_token();
+      }
+    },
+    created() {
+      this.get_token();
+    }
   }
 </script>
 
