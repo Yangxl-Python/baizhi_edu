@@ -21,6 +21,8 @@
             <span><router-link to="/cart">购物车</router-link></span>
           </div>
           <div class="login-box full-left" v-if="token">
+            <span>{{username}}</span>
+            &nbsp;|&nbsp;
             <router-link to="/login">个人中心</router-link>
             &nbsp;|&nbsp;
             <span><a href="javascript:void(0);" @click="logout">退出登录</a></span>
@@ -28,7 +30,7 @@
           <div class="login-box full-left" v-else>
             <router-link to="/login">登录</router-link>
             &nbsp;|&nbsp;
-            <span>注册</span>
+            <router-link to="/register">注册</router-link>
           </div>
         </div>
       </div>
@@ -43,11 +45,19 @@
     data() {
       return{
         token: '',
+        username: ''
       }
     },
     methods: {
+      get_data(data) {
+        return localStorage.getItem(data) || sessionStorage.getItem(data);
+      },
       get_token() {
-        this.token = localStorage.getItem('token') || localStorage.getItem('token');
+        this.token = this.get_data('token');
+      },
+      get_username() {
+        let user_info = JSON.parse(this.get_data('user_info'));
+        this.username = user_info.username;
       },
       logout() {
         localStorage.removeItem('token');
@@ -57,6 +67,7 @@
     },
     created() {
       this.get_token();
+      this.get_username();
     }
   }
 </script>
@@ -80,7 +91,7 @@
   }
 
   .header .content {
-    max-width: 1200px;
+    max-width: 1300px;
     width: 100%;
     margin: 0 auto;
   }

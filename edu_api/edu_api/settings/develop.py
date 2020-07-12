@@ -160,7 +160,7 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
     # jwt响应格式
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-        # 'rest_framework_jwt.utils.jwt_response_payload_handler',
+    # 'rest_framework_jwt.utils.jwt_response_payload_handler',
         'user.utils.jwt_response_payload_handler',
 }
 
@@ -220,5 +220,23 @@ LOGGING = {
             'handlers': ['console', 'file'],
             'propagate': True,  # 是否让日志信息继续冒泡给其他的日志处理系统
         },
+    }
+}
+
+# Redis 配置
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",  # Redis缓存入口，其中使用DefaultClient操作缓存
+        "LOCATION": "redis://192.168.115.128:8000/0",  # ip:port/db_index
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"  # 操作缓存的对象
+        }
+    },
+    "sms_code": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.115.128:8000/15",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
     }
 }

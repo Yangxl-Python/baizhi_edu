@@ -8,10 +8,10 @@
       </div>
       <div class="login_box">
         <div class="title">
-          <span>密码登录</span>
-          <span>短信登录</span>
+          <span @click="pwd_login=true" :class="pwd_login?selected:''">密码登录</span>
+          <span @click="pwd_login=false" :class="pwd_login?'':selected">短信登录</span>
         </div>
-        <div class="inp" v-if="">
+        <div class="inp" v-show="pwd_login">
           <input type="text" placeholder="用户名 / 手机号码 / 邮箱" class="user" v-model="account">
           <input type="password" name="" class="pwd" placeholder="密码" v-model="pwd">
           <div id="geetest1"></div>
@@ -24,17 +24,23 @@
           </div>
           <button class="login_btn btn btn-primary" @click="get_captcha">登录</button>
           <p class="go_login">没有账号
-            <router-link to="/user/register/">立即注册</router-link>
+            <router-link to="/register">立即注册</router-link>
           </p>
         </div>
-        <div class="inp" v-show="">
-          <input type="text" placeholder="手机号码" class="user">
-          <input type="text" class="pwd" placeholder="短信验证码">
-          <button id="get_code" class="btn btn-primary">获取验证码</button>
-          <button class="login_btn">登录</button>
-          <span class="go_login">没有账号
-            <router-link to="/user/register/">立即注册</router-link>
-          </span>
+        <div class="inp" v-show="!pwd_login">
+          <input type="text" placeholder="手机号码" class="user" v-model="phone">
+          <input type="text" class="pwd" placeholder="短信验证码" v-model="code">
+          <button id="get_code" class="btn btn-primary" @click="get_code" :disabled="is_send">{{sms_btn}}</button>
+          <div class="rember">
+            <p>
+              <input type="checkbox" class="no" v-model="remember_me"/>
+              <span>记住我</span>
+            </p>
+          </div>
+          <button class="login_btn" @click="login_by_phone" :disabled="is_sub">{{login_btn}}</button>
+          <p class="go_login">没有账号
+            <router-link to="/register">立即注册</router-link>
+          </p>
         </div>
       </div>
     </div>
@@ -49,7 +55,15 @@
         // 多方式登录
         account: '',
         pwd: '',
-        remember_me: false
+        remember_me: false,
+        pwd_login: true,
+        selected: 'selected',
+        phone: '',
+        code: '',
+        sms_btn: '获取验证码',
+        is_send: false,
+        is_sub: false,
+        login_btn: '登录',
       }
     },
     methods: {
@@ -90,7 +104,7 @@
           }).then(response => {
             // console.log(response.data.status);
             if (response.data.status) {
-              self.user_login()
+              self.user_login();
             }
           }).catch(error => {
             console.log(error);
@@ -99,6 +113,39 @@
         // 将生成的验证码添加到 id为geetest1的div中
         document.getElementById("geetest1").innerHTML = "";
         captchaObj.appendTo("#geetest1");
+      },
+      login_success(res) {
+        if (res.status === 200 && res.data.token) {  // 若登录成功则status=200 且有token
+          let user_info = {  // 储存用户信息
+            'user_id': res.data.user_id,
+            'account': this.account,  // 登录时使用的信息（邮箱，手机号，账号）
+            'username': res.data.username,  // 用于显示用户名
+            'pwd': this.pwd
+          };
+          if (this.remember_me) {
+            localStorage.setItem('user_info', JSON.stringify(user_info));
+            localStorage.setItem('token', res.data.token);
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('user_info');
+          } else {
+            sessionStorage.setItem('token', res.data.token);
+            sessionStorage.setItem('user_info', JSON.stringify(user_info));
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_info');
+          }
+          this.$message({
+            message: '登录成功',
+            type: 'success'
+          });
+          this.$router.push('/home');
+        }
+      },
+      login_fail(error, message) {
+        this.$message({
+          message: message,
+          type: 'error'
+        });
+        localStorage.removeItem('user_info');
       },
       user_login() {
         this.$axios({
@@ -109,36 +156,9 @@
             password: this.pwd
           }
         }).then(res => {
-          if (res.status === 200 && res.data.token) {  // 若登录成功则status=200 且有token
-            let user_info = {  // 储存用户信息
-              'user_id': res.data.user_id,
-              'account': this.account,  // 登录时使用的信息（邮箱，手机号，账号）
-              'username': res.data.username,  // 用于显示用户名
-              'pwd': this.pwd
-            };
-            if (this.remember_me) {
-              localStorage.setItem('user_info', JSON.stringify(user_info));
-              localStorage.setItem('token', res.data.token);
-              sessionStorage.removeItem('token');
-              sessionStorage.removeItem('user_info');
-            } else {
-              sessionStorage.setItem('token', res.data.token);
-              sessionStorage.setItem('user_info', JSON.stringify(user_info));
-              localStorage.removeItem('token');
-              localStorage.removeItem('user_info');
-            }
-            this.$message({
-              message: '登录成功',
-              type: 'success'
-            });
-            this.$router.push('/home');
-          }
+          this.login_success(res);
         }).catch(error => {
-          this.$message({
-            message: '用户名或密码错误',
-            type: 'error'
-          });
-          localStorage.removeItem('user_info');
+          this.login_fail(error, '用户名或密码错误');
           console.log(error);
         });
       },
@@ -148,6 +168,67 @@
           this.account = user_info.account;
           this.pwd = user_info.pwd;
           this.remember_me = true;
+        }
+      },
+      get_code() {
+        if (!/1[356789]\d{9}/.test(this.phone)) {
+          this.$message({message: '手机号格式有误', type: 'warning', showClose: true});
+          return false
+        }
+        this.sms_btn = `正在发送`;
+        this.is_send = true;
+        this.$axios.get(this.$settings.HOST + `user/sms/${this.phone}/`).then(res => {
+          if (res.status === 200) {
+            this.$message({message: '发送成功', type: 'success', showClose: true});
+            this.countdown();
+          }
+        }).catch(error => {
+          console.log(error.response);
+          this.$message.error(error.response.data.message);
+          this.sms_btn = `获取验证码`;
+          this.is_send = false;
+        });
+      },
+      countdown() {
+        this.is_send = true;
+        let interval = 60;
+        let timer = setInterval(() => {
+          if (interval <= 0) {
+            // 停止倒计时  允许发送短信
+            this.is_send = false; // 设置允许发送短信 false
+            this.sms_btn = `获取验证码`;
+            clearInterval(timer);
+          } else {
+            interval--;
+            this.sms_btn = `${interval}s后可以重新发送`;
+          }
+        }, 1000);
+      },
+      login_by_phone() {
+        if (this.phone && this.code) {
+          this.is_sub = true;
+          this.login_btn = '请稍候';
+          // 发起登录请求
+          this.$axios({
+            url: this.$settings.HOST + 'user/login_by_phone/',
+            method: 'post',
+            data: {
+              phone: this.phone,
+              code: this.code,
+              login: 1
+            }
+          }).then(res => {
+            this.is_sub = false;
+            this.login_btn = '登录';
+            this.login_success(res)
+          }).catch(error => {
+            this.is_sub = false;
+            this.login_btn = '登录';
+            this.login_fail(error, '验证码有误或已过期');
+            console.log(error.response);
+          });
+        } else {
+          this.$message({message: '手机号和验证码不能为空', type: 'warning', showClose: true});
         }
       }
     },
@@ -223,7 +304,7 @@
     cursor: pointer;
   }
 
-  .login_box .title span:nth-of-type(1) {
+  .login_box .title .selected {
     color: #4a4a4a;
     border-bottom: 2px solid #84cc39;
   }
