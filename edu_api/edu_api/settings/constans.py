@@ -1,3 +1,6 @@
+# 域名
+HOST = 'http://api.baizhishop.com:9001/'
+
 # 轮播图数量
 BANNER_LENGTH = 3
 

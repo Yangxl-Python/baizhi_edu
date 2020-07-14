@@ -65,6 +65,7 @@
       :page-sizes="[2, 3, 5, 10]"
       @current-change="change_page"
       @size-change="size_change"
+      :current-page.sync="filters.page"
       :total="total">
     </el-pagination>
   </div>
@@ -93,8 +94,8 @@
     watch: {
       // 监听category是否发生了改变  一旦发生改变说明用户要查看另一个分类的课程
       category() {
-        // 重新查询课程
-        this.get_course_list();
+        // 重置页数并重新查询课程
+        this.change_page(1);
       },
     },
     methods: {

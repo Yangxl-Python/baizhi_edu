@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'django_filters',
+    'ckeditor',  # 富文本编辑器
+    'ckeditor_uploader',  # 富文本编辑器的上传模块
 
     'home',
     'user',
@@ -172,6 +174,16 @@ AUTH_USER_MODEL = 'user.UserInfo'
 AUTHENTICATION_BACKENDS = [
     'user.utils.UserAuthBackend'
 ]
+
+# 富文本编辑器配置
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',  # 展示哪些工具栏
+        'height': 300,  # 编辑器的高度
+        # 'width': 300,
+    },
+}
+CKEDITOR_UPLOAD_PATH = ''
 
 # 项目的日志配置
 LOGGING = {

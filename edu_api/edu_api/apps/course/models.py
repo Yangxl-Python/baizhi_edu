@@ -1,7 +1,9 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 
 from home.BaseModel import BaseModel
 
+from edu_api.settings.constans import HOST
 
 class CourseCategory(BaseModel):
     """
@@ -41,11 +43,11 @@ class Course(BaseModel):
     course_img = models.ImageField(upload_to="course", max_length=255, verbose_name="封面图片", blank=True, null=True)
     course_type = models.SmallIntegerField(choices=course_type, default=0, verbose_name="付费类型")
     # 使用这个字段的原因
-    brief = models.TextField(max_length=2048, verbose_name="详情介绍", null=True, blank=True)
+    brief = RichTextUploadingField(verbose_name="详情介绍", null=True, blank=True)
     level = models.SmallIntegerField(choices=level_choices, default=1, verbose_name="难度等级")
     pub_date = models.DateField(verbose_name="发布日期", auto_now_add=True)
     period = models.IntegerField(verbose_name="建议学习周期(day)", default=7)
-    file_path = models.FileField(max_length=128, verbose_name="课件路径", blank=True, null=True)
+    file_path = models.FileField(upload_to='video', verbose_name="课件路径", blank=True, null=True)
     status = models.SmallIntegerField(choices=status_choices, default=0, verbose_name="课程状态")
     course_category = models.ForeignKey("CourseCategory", on_delete=models.CASCADE, null=True, blank=True,
                                         verbose_name="课程分类")
@@ -54,6 +56,8 @@ class Course(BaseModel):
     pub_lessons = models.IntegerField(verbose_name="课时更新数量", default=0)
     price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="课程原价", default=0)
     teacher = models.ForeignKey("Teacher", on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="授课老师")
+    comment = models.TextField(verbose_name="用户评论", null=True, blank=True)
+    problems = RichTextUploadingField(verbose_name="常见问题", null=True, blank=True)
 
     class Meta:
         db_table = "bz_course"
@@ -93,6 +97,14 @@ class Course(BaseModel):
                 'lesson_list': chapter.lesson_list
             })
         return data_list
+
+    @property
+    def brief_(self):
+        return self.brief.replace('src="/media/', f'src="{HOST}media/')
+
+    @property
+    def problems_(self):
+        return self.problems.replace('src="/media/', f'src="{HOST}media/')
 
 
 class Teacher(BaseModel):

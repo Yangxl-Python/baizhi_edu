@@ -36,27 +36,23 @@
       <div class="course-tab">
         <ul class="tab-list">
           <li :class="tabIndex===1?'active':''" @click="tabIndex=1">详情介绍</li>
-          <li :class="tabIndex===2?'active':''" @click="tabIndex=2">课程章节 <span :class="tabIndex!==2?'free':''">(试学)</span>
+          <li :class="tabIndex===2?'active':''" @click="tabIndex=2">课程章节 <span
+            :class="tabIndex!==2?'free':''">(试学)</span>
           </li>
-          <li :class="tabIndex===3?'active':''" @click="tabIndex=3">用户评论 (42)</li>
+          <li :class="tabIndex===3?'active':''" @click="tabIndex=3">用户评论 ({{user_comment.length}})</li>
           <li :class="tabIndex===4?'active':''" @click="tabIndex=4">常见问题</li>
         </ul>
       </div>
       <div class="course-content">
         <div class="course-tab-list">
           <div class="tab-item" v-if="tabIndex===1">
-            <p><img alt=""
-                    src=""
-                    width="840"></p>
-            <p v-html="course_detail.brief"/>
-            <p><img alt=""
-                    src=""
-                    width="840"></p>
+            <div v-html="course_detail.brief_"/>
           </div>
           <div class="tab-item" v-if="tabIndex===2">
             <div class="tab-item-title">
               <p class="chapter">课程章节</p>
-              <p class="chapter-length">共{{course_detail.chapter_list.length}}章&nbsp;{{course_detail.pub_lessons}}个课时</p>
+              <p class="chapter-length">
+                共{{course_detail.chapter_list.length}}章&nbsp;{{course_detail.pub_lessons}}个课时</p>
             </div>
             <div class="chapter-item" v-for="(chapter, index) in course_detail.chapter_list" :key="chapter.id">
               <p class="chapter-title"><img src="/static/image/1.svg" alt="">第{{chapter.chapter}}章·{{chapter.name}}</p>
@@ -75,9 +71,21 @@
           </div>
           <div class="tab-item" v-if="tabIndex===3">
             用户评论
+            <hr>
+            <div style="width: 500px">
+              <ul>
+                <li v-for="comment in user_comment">
+                  <img src="../../../static/image/arrow_right.png" style="width: 20px">
+                  {{comment}}
+                </li>
+              </ul>
+              <el-input type="textarea" v-model="input_text"/>&nbsp;
+              <el-button plain @click="submit_comment">提交评论</el-button>
+            </div>
           </div>
           <div class="tab-item" v-if="tabIndex===4">
             常见问题
+            <div v-html="course_detail.problems_"/>
           </div>
         </div>
         <div class="course-side">
@@ -85,7 +93,7 @@
             <h4 class="side-title"><span>授课老师</span></h4>
             <div class="teacher-content">
               <div class="cont1">
-                <img src="/static/image/user.svg">
+                <img :src="course_detail.teacher.image">
                 <div class="name">
                   <p class="teacher-name">{{course_detail.teacher.name}}</p>
                   <p class="teacher-title">{{course_detail.teacher.title}}</p>
@@ -107,7 +115,14 @@
     name: "CourseDetail",
     data() {
       return {
-        course_detail: {},
+        input_text: '',
+        user_comment: [],
+        course_detail: {
+          course_img: '',
+          file_path: '',
+          teacher: {},
+          chapter_list: [],
+        },
         course_id: this.$route.params.id,
         tabIndex: 2, // 当前选项卡显示的下标
         playerOptions: {
@@ -130,16 +145,41 @@
       }
     },
     methods: {
+      load_comment(data) {
+        return data ? JSON.parse(data) : [];
+      },
       get_course_detail() {
-        this.$axios.get(`${this.$settings.HOST}course/detail/${this.course_id}/`).then(res=>{
+        this.$axios.get(`${this.$settings.HOST}course/detail/${this.course_id}/`).then(res => {
           this.course_detail = res.data;
-          console.log(this.course_detail);
-        }).catch(err=>{
+          this.user_comment = this.load_comment(res.data.comment);
+          if (this.course_detail.file_path) {
+            this.playerOptions.poster = this.course_detail.course_img;
+            this.playerOptions.sources[0].src = this.course_detail.file_path;
+          }
+        }).catch(err => {
           console.log(err.response);
         });
       },
-      onPlayerPlay(event) {},
-      onPlayerPause(event) {}
+      submit_comment() {
+        this.user_comment.push(this.input_text);
+        this.$axios({
+          url: `${this.$settings.HOST}course/detail/${this.course_id}/`,
+          method: 'patch',
+          data: {
+            comment: JSON.stringify(this.user_comment)
+          }
+        }).then(res => {
+          this.course_detail = res.data;
+          this.user_comment = this.load_comment(res.data.comment);
+          this.input_text = '';
+        }).catch(err => {
+          console.log(err.response);
+        });
+      },
+      onPlayerPlay(event) {
+      },
+      onPlayerPause(event) {
+      }
     },
     created() {
       this.get_course_detail();

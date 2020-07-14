@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
@@ -33,7 +33,7 @@ class CourseFilterListAPIView(ListAPIView):
     pagination_class = CoursePageNumber
 
 
-class CourseDetailRetrieveAPIView(RetrieveAPIView):
+class CourseDetailRetrieveAPIView(RetrieveUpdateAPIView):
 
     queryset = Course.objects.filter(is_show=True, is_delete=False)
     serializer_class = CourseDetailModelSerializer
