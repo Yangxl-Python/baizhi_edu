@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header :nav_list="nav_list"/>
-    <Banner/>
+    <router-view/>
     <Footer :nav_list="nav_list"/>
   </div>
 </template>
@@ -14,7 +14,6 @@
   export default {
     name: "Home",
     components: {
-      Banner: Banner,
       Header: Header,
       Footer: Footer
     },

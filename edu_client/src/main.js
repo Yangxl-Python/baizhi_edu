@@ -17,6 +17,12 @@ import '../static/css/global.css'
 
 import '../static/js/gt'
 
+require('video.js/dist/video-js.css');
+require('vue-video-player/src/custom-theme.css');
+import VideoPlayer from 'vue-video-player'
+
+Vue.use(VideoPlayer);
+
 Vue.prototype.$axios = axios;
 
 Vue.use(Element);
