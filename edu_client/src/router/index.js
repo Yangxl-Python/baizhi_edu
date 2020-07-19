@@ -6,6 +6,8 @@ import Register from "../components/Register";
 import Course from "../components/common/Course";
 import Banner from "../components/common/Banner";
 import Detail from "../components/common/Detail";
+import Cart from "../components/common/Cart";
+import Order from "../components/common/Order";
 
 Vue.use(Router);
 
@@ -30,6 +32,14 @@ export default new Router({
         {
           path: 'course/detail/:id',
           component: Detail
+        },
+        {
+          path: 'cart',
+          component: Cart
+        },
+        {
+          path: 'order',
+          component: Order
         },
       ]
     },

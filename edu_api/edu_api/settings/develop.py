@@ -54,7 +54,8 @@ INSTALLED_APPS = [
 
     'home',
     'user',
-    'course'
+    'course',
+    'order'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'edu_api.urls'
@@ -133,7 +133,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# 使用时区
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -161,7 +162,7 @@ REST_FRAMEWORK = {
 # jwt配置
 JWT_AUTH = {
     # 有效时间
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60 * 60 * 24),
     # jwt响应格式
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     # 'rest_framework_jwt.utils.jwt_response_payload_handler',
@@ -249,6 +250,13 @@ CACHES = {
     "sms_code": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://192.168.115.128:8000/15",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    },
+    "cart": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.115.128:8000/14",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         }

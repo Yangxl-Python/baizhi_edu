@@ -18,7 +18,7 @@
         <div class="login-bar full-right">
           <div class="shop-cart full-left">
             <img src="/static/image/cart.svg" alt="">
-            <span><router-link to="/cart">购物车</router-link></span>
+            <span><router-link to="/home/cart">{{this.$store.state.cart_count}}购物车</router-link></span>
           </div>
           <div class="login-box full-left" v-if="token">
             <span>{{username}}</span>

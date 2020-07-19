@@ -15,21 +15,25 @@
         <div class="wrap-right">
           <h3 class="course-name">{{course_detail.name}}</h3>
           <p class="data">{{course_detail.students}}人在学&nbsp;&nbsp;&nbsp;&nbsp;课程总时长：{{course_detail.lessons}}课时/{{course_detail.lessons*2}}小时&nbsp;&nbsp;&nbsp;&nbsp;难度：{{course_detail.level_name}}</p>
-          <div class="sale-time">
-            <p class="sale-type">限时免费</p>
-            <p class="expire">距离结束：仅剩 110天 13小时 33分 <span class="second">08</span> 秒</p>
+          <div class="sale-time" v-if="course_detail.active_time !== 0">
+            <p class="sale-type">{{course_detail.discount_name}}</p>
+            <p class="expire">距离结束：仅剩&nbsp;
+              {{parseInt(course_detail.active_time/(24*3600))}}天&nbsp;
+              {{parseInt(course_detail.active_time/3600%24)}}小时&nbsp;
+              {{parseInt(course_detail.active_time/60%60)}}分&nbsp;
+              <span class="second">{{parseInt(course_detail.active_time%60)}}</span>&nbsp;秒</p>
           </div>
           <p class="course-price">
-            <span>活动价</span>
-            <span class="discount">¥0.00</span>
-            <span class="original">¥{{course_detail.price}}</span>
+            <span v-if="course_detail.real_price!==parseFloat(course_detail.price)">活动价</span>
+            <span class="discount">¥{{course_detail.real_price.toFixed(2)}}</span>
+            <span class="original" v-if="course_detail.real_price!==parseFloat(course_detail.price)">¥{{course_detail.price}}</span>
           </p>
           <div class="buy">
             <div class="buy-btn">
               <button class="buy-now">立即购买</button>
               <button class="free">免费试学</button>
             </div>
-            <div class="add-cart"><img src="/static/image/cart-yellow.svg" alt="">加入购物车</div>
+            <div class="add-cart" @click="add_cart"><img src="/static/image/cart-yellow.svg" alt="">加入购物车</div>
           </div>
         </div>
       </div>
@@ -118,6 +122,10 @@
         input_text: '',
         user_comment: [],
         course_detail: {
+          price: 0,
+          real_price: 0,
+          active_time: 0,
+          lessons: 0,
           course_img: '',
           file_path: '',
           teacher: {},
@@ -156,6 +164,9 @@
             this.playerOptions.poster = this.course_detail.course_img;
             this.playerOptions.sources[0].src = this.course_detail.file_path;
           }
+          if (this.course_detail.active_time > 0) {
+            this.count_down();
+          }
         }).catch(err => {
           console.log(err.response);
         });
@@ -175,6 +186,42 @@
         }).catch(err => {
           console.log(err.response);
         });
+      },
+      check_user() {
+        // 检查是否登录
+        let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) {
+          this.$router.push('/login');
+          return false;
+        }
+        return token;
+      },
+      add_cart() {
+        let token = this.check_user();
+        this.$axios({
+          url: `${this.$settings.HOST}cart/option/`,
+          method: 'post',
+          data: {
+            course_id: this.course_id
+          },
+          headers: {
+            Authorization: `jwt ${token}`
+          }
+        }).then(res => {
+          this.$store.commit('add_cart', res.data.course_len);
+          this.$message.success(res.data.message)
+        }).catch(err => {
+          console.log(err.response);
+        })
+      },
+      count_down() {
+        let timer = setInterval(() => {
+          if (this.course_detail.active_time > 1) {
+            this.course_detail.active_time -= 1
+          } else {
+            clearInterval(timer);
+          }
+        }, 1000);
       },
       onPlayerPlay(event) {
       },

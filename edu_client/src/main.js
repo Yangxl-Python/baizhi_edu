@@ -21,6 +21,8 @@ require('video.js/dist/video-js.css');
 require('vue-video-player/src/custom-theme.css');
 import VideoPlayer from 'vue-video-player'
 
+import store from "./store/index";
+
 Vue.use(VideoPlayer);
 
 Vue.prototype.$axios = axios;
@@ -35,6 +37,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 });
