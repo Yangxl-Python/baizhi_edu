@@ -20,16 +20,14 @@
             <li class="price" @click="change_order_type('price')" :class="change_order_class('price')">价格
             </li>
           </ul>
-          <p class="condition-result">共21个课程</p>
+          <p class="condition-result">共{{total}}个课程</p>
         </div>
-
       </div>
       <!-- 课程列表 -->
       <div class="course-list">
-
         <div class="course-item" v-for="course in course_list">
           <div class="course-image">
-            <img :src="course.course_img" alt="">
+            <router-link :to="`/home/course/detail/${course.id}`"><img :src="course.course_img" alt=""></router-link>
           </div>
           <div class="course-info">
             <h3>
@@ -45,13 +43,12 @@
                 <span class="lesson-title">{{key+1}} | 第{{key+1}}节：{{lesson.name}}</span>
                 <span class="free" v-if="lesson.free_trail">免费</span>
               </li>
-
             </ul>
             <div class="pay-box">
               <span class="discount-type" v-if="course.discount_name">{{course.discount_name}}</span>
               <span class="discount-price">￥{{course.real_price.toFixed(2)}}元</span>
               <span class="original-price" v-if="course.real_price!==parseFloat(course.price)">原价：{{course.price}}元</span>
-              <span class="buy-now">立即购买</span>
+              <router-link :to="`/home/order/${course.id}`"><span class="buy-now">立即购买</span></router-link>
             </div>
           </div>
         </div>
@@ -345,18 +342,18 @@
   /* 顶级元素 父级元素  当前元素{} */
   .course .course-item .course-image {
     float: left;
-    width: 423px;
+    width: 385px;
     height: 210px;
     margin-right: 30px;
   }
 
   .course .course-item .course-image img {
-    width: 100%;
+    height: 210px;
   }
 
   .course .course-item .course-info {
     float: left;
-    width: 596px;
+    width: 626px;
   }
 
   .course-item .course-info h3 {

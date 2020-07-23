@@ -8,7 +8,7 @@ from edu_api.settings.constans import MATCH_PHONE
 from user.models import UserInfo
 from user.utils import get_user_by_account
 
-from utils.create_token import create_token
+from edu_api.utils.create_token import create_token
 
 
 class UserModelSerializer(serializers.ModelSerializer):

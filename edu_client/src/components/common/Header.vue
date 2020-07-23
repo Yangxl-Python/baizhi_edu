@@ -23,7 +23,7 @@
           <div class="login-box full-left" v-if="token">
             <span>{{username}}</span>
             &nbsp;|&nbsp;
-            <router-link to="/login">个人中心</router-link>
+            <router-link to="/home/order/list">个人中心</router-link>
             &nbsp;|&nbsp;
             <span><a href="javascript:void(0);" @click="logout">退出登录</a></span>
           </div>
@@ -63,6 +63,7 @@
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
         this.get_token();
+        this.$message.success('退出成功');
       }
     },
     created() {

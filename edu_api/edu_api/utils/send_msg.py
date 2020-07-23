@@ -1,5 +1,5 @@
 import requests
-from edu_api.settings.constans import SINGLE_SEND_URL, API_KEY
+from edu_api.settings.constans import SINGLE_SEND_URL
 
 
 class Message:
@@ -15,5 +15,4 @@ class Message:
             'text': "【毛信宇test】您的验证码是{code}。如非本人操作，请忽略本短信".format(code=code)
         }
         res = requests.post(self.single_send_url, data=params)
-        print(res)
         return res

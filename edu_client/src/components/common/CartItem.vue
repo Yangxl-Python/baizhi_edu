@@ -72,7 +72,8 @@
           }
         }).then(res => {
           this.$message.success(res.data.message);
-          this.$parent.get_cart();
+          this.$parent.change_status();
+          this.$parent.compute_total_price();
         }).catch(err => {
           console.log(err.response);
         });

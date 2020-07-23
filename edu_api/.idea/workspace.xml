@@ -2,22 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c776015-10ed-4c1f-813d-ac232af8e700" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/99422.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu_api/apps/course/adminx.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/course/adminx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu_api/apps/course/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu_api/apps/course/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/course/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu_api/apps/course/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/course/serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu_api/apps/home/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu_api/apps/user/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/cart/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/cart/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/cart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/cart/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/order/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/order/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/order/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/order/serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/order/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/order/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/order/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/order/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/user/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/user/serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/apps/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/apps/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu_api/settings/constans.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/settings/constans.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edu_api/settings/develop.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/settings/develop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edu_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/lesson_api.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/lesson_api.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../edu_client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../edu_client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/utils/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/create_token.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/utils/create_token.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/utils/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/get_random_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/utils/get_random_code.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/send_msg.py" beforeDir="false" afterPath="$PROJECT_DIR$/edu_api/utils/send_msg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../edu_client/src/components/common/Cart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/components/common/Cart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../edu_client/src/components/common/CartItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/components/common/CartItem.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../edu_client/src/components/common/Course.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/components/common/Course.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../edu_client/src/components/common/Detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/components/common/Detail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../edu_client/src/components/common/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/components/common/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../edu_client/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../edu_client/src/components/common/Order.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/components/common/Order.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../edu_client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../edu_client/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,20 +74,21 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/edu_api/media" />
-    <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/edu_api/apps/payments/keys" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\utils" />
+      <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\my_task\check_order" />
       <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\edu_api" />
+      <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\edu_api\apps\payments\keys" />
       <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\edu_api\media" />
       <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\edu_api\apps\course" />
       <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\libs" />
       <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\media\banner" />
-      <recent name="E:\python\web_develop\Djangofiles\DRF_projects\baizhi_edu\edu_api\edu_api\apps\home" />
     </key>
   </component>
   <component name="RunManager" selected="Python.manage">
@@ -203,6 +213,20 @@
       <workItem from="1594946923627" duration="16767000" />
       <workItem from="1595042694855" duration="8914000" />
       <workItem from="1595157695717" duration="1902000" />
+      <workItem from="1595209611093" duration="2478000" />
+      <workItem from="1595233809447" duration="15540000" />
+      <workItem from="1595304005232" duration="2640000" />
+      <workItem from="1595307736869" duration="462000" />
+      <workItem from="1595318429988" duration="12880000" />
+      <workItem from="1595337613323" duration="395000" />
+      <workItem from="1595338264427" duration="1112000" />
+      <workItem from="1595342735273" duration="4125000" />
+      <workItem from="1595379998909" duration="14951000" />
+      <workItem from="1595405643033" duration="182000" />
+      <workItem from="1595406034868" duration="531000" />
+      <workItem from="1595411280570" duration="190000" />
+      <workItem from="1595414494511" duration="27000" />
+      <workItem from="1595464594562" duration="5363000" />
     </task>
     <servers />
   </component>
@@ -222,53 +246,57 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="675" y="169" key="#manage/0.0.1920.1040@0.0.1920.1040" timestamp="1594205070966" />
-    <state x="527" y="388" key="FileChooserDialogImpl" timestamp="1594202129597">
+    <state x="527" y="388" key="FileChooserDialogImpl" timestamp="1595338560862">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="527" y="388" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594202129597" />
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1595159891002">
+    <state x="527" y="388" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1595338560862" />
+    <state width="1877" height="218" key="GridCell.Tab.0.bottom" timestamp="1595473109031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595159891002" />
-    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1595159891002">
+    <state width="1877" height="218" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595473109031" />
+    <state width="1877" height="218" key="GridCell.Tab.0.center" timestamp="1595473109031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595159891002" />
-    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1595159891002">
+    <state width="1877" height="218" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595473109031" />
+    <state width="1877" height="218" key="GridCell.Tab.0.left" timestamp="1595473109031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595159891002" />
-    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1595159891002">
+    <state width="1877" height="218" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595473109031" />
+    <state width="1877" height="218" key="GridCell.Tab.0.right" timestamp="1595473109031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595159891002" />
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1594292075523">
+    <state width="1877" height="218" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595473109031" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1595337562040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594292075523" />
-    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1594292075522">
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595337562040" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1595337562040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594292075522" />
-    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1594292075522">
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595337562040" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1595337562040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594292075522" />
-    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1594292075522">
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595337562040" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1595337562040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594292075522" />
-    <state x="463" y="165" key="SettingsEditor" timestamp="1595158999265">
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595337562040" />
+    <state x="463" y="165" key="SettingsEditor" timestamp="1595338564143">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="463" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1595158999265" />
+    <state x="463" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1595338564143" />
     <state x="754" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594374500597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="754" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594374500597" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1595234420606">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1595234420606" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/edu_api$send_msg.coverage" NAME="send_msg Coverage Results" MODIFIED="1594550569214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/edu_api$manage.coverage" NAME="manage Coverage Results" MODIFIED="1595157703300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/edu_api$manage.coverage" NAME="manage Coverage Results" MODIFIED="1595466267100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

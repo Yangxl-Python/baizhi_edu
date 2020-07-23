@@ -11,9 +11,9 @@ from edu_api.settings.constans import MATCH_PHONE, SMS_EXPIRE_TIME, PHONE_EXPIRE
 from user.models import UserInfo
 from user.serializer import UserModelSerializer
 from user.utils import get_user_by_account
-from utils.get_random_code import get_random_code
-from utils.create_token import create_token
-from utils.send_msg import Message
+from edu_api.utils.get_random_code import get_random_code
+from edu_api.utils.create_token import create_token
+# from edu_api.utils.send_msg import Message
 
 from django_redis import get_redis_connection
 
@@ -92,8 +92,12 @@ class SendMessageAPIView(APIView):
         redis_connection.setex(phone_key, PHONE_EXPIRE_TIME, code)  # 设置验证码，PHONE_EXPIRE_TIME后过期
 
         try:
-            message = Message(API_KEY)
-            message.send_message(number, code)
+            # 通过celery异步执行发送短信的服务
+            from my_task.sms.tasks import send_sms
+            # 调用任务函数  发布任务
+            send_sms.delay(number, code)  # 如果需要参数则传递过去 不需要则不传递
+            # message = Message(API_KEY)
+            # message.send_message(number, code)
         except:
             return Response({'message': '短信发送失败'}, status=http_status.HTTP_500_INTERNAL_SERVER_ERROR)
 

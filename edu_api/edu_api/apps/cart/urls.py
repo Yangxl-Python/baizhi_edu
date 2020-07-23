@@ -12,5 +12,8 @@ urlpatterns = [
     })),
     path('order/', views.CartViewSet.as_view({
         'get': 'get_select_course'
-    }))
+    })),
+    path('order/<id>/', views.CartViewSet.as_view({
+        'get': 'get_course_by_id'
+    })),
 ]

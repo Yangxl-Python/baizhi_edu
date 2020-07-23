@@ -30,10 +30,10 @@
           </p>
           <div class="buy">
             <div class="buy-btn">
-              <button class="buy-now">立即购买</button>
+              <button class="buy-now" @click="buy_now">立即购买</button>
               <button class="free">免费试学</button>
             </div>
-            <div class="add-cart" @click="add_cart"><img src="/static/image/cart-yellow.svg" alt="">加入购物车</div>
+            <div class="add-cart" @click="add_cart"><img src="/static/image/cart_empty.png" alt="">加入购物车</div>
           </div>
         </div>
       </div>
@@ -222,6 +222,9 @@
             clearInterval(timer);
           }
         }, 1000);
+      },
+      buy_now() {
+        this.$router.push(`/home/order/${this.course_id}`);
       },
       onPlayerPlay(event) {
       },

@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'home',
     'user',
     'course',
-    'order'
+    'order',
+    'payments'
 ]
 
 MIDDLEWARE = [
@@ -97,7 +98,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "edu_api_db",
-        'HOST': "localhost",
+        'HOST': "192.168.115.128",
         'PORT': 3306,
         'USER': "root",
         'PASSWORD': '123456'
@@ -151,7 +152,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # DRF 默认配置
 REST_FRAMEWORK = {
     # 全局异常配置
-    "EXCEPTION_HANDLER": "utils.exceptions.exception_handler",
+    "EXCEPTION_HANDLER": "edu_api.utils.exceptions.exception_handler",
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -185,6 +186,21 @@ CKEDITOR_CONFIGS = {
     },
 }
 CKEDITOR_UPLOAD_PATH = ''
+
+# 支付宝配置信息
+ALIAPY_CONFIG = {
+    # "gateway_url": "https://openapi.alipay.com/gateway.do?", # 真实支付宝网关地址
+    "gateway_url": "https://openapi.alipaydev.com/gateway.do?",  # 沙箱支付宝网关地址
+    "appid": "2016102700769404",
+    "app_notify_url": None,
+    "app_private_key_path": open(os.path.join(BASE_DIR, "apps/payments/keys/app_private_key.pem")).read(),
+    "alipay_public_key_path": open(os.path.join(BASE_DIR, "apps/payments/keys/alipay_public_key.pem")).read(),
+    "sign_type": "RSA2",
+    "debug": False,
+    # "return_url": "http://www.baizhistore.cn:8080/payments/result",  # 同步回调地址
+    "return_url": "http://www.baizhishop.com:8080/home/payments/result",  # 同步回调地址
+    "notify_url": "http://127.0.0.1:9001/payments/result/",  # 异步结果通知
+}
 
 # 项目的日志配置
 LOGGING = {

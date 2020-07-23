@@ -19,9 +19,12 @@
           </el-col>
           <el-col :span="8"><span>{{course.expire_text}}</span></el-col>
           <el-col :span="4" class="course-price">
-            <span class="real_price">¥{{course.real_price}}（{{course.discount_name}}）</span>
+            <span class="real_price">
+              ¥{{course.real_price}}
+              <span v-if="course.real_price!==parseFloat(course.price)">（{{course.discount_name}}）</span>
+            </span>
             <br>
-            <span class="original_price">原价：¥{{course.price}}</span>
+            <span class="original_price" v-if="course.real_price!==parseFloat(course.price)">原价：¥{{course.price}}</span>
           </el-col>
         </el-row>
       </div>
@@ -48,6 +51,7 @@
         pay_type: 1,
         course_list: [],
         total_price: 0.0,
+        order_course_id: undefined,
       }
     },
     methods: {
@@ -81,7 +85,8 @@
           url: `${this.$settings.HOST}order/option/`,
           method: 'post',
           data: {
-            pay_type: this.pay_type
+            pay_type: this.pay_type,
+            course_id: this.order_course_id
           },
           headers: {
             Authorization: `jwt ${token}`
@@ -91,21 +96,57 @@
           if (res.status === 201) {
             this.$message({
               showClose: true,
-              message: '创建订单成功',
+              message: '创建订单成功，即将跳转支付页面',
               type: 'success'
             });
+            this.$axios({
+              url: `${this.$settings.HOST}payments/alipay/`,
+              method: 'get',
+              params: {
+                order_number: res.data.order_number
+              },
+              headers: {
+                Authorization: `jwt ${token}`
+              }
+            }).then(res => {
+              location.href = res.data;
+            }).catch(err => {
+              console.log(err.response);
+            });
           }
-          console.log(res.data);
         }).catch(err => {
           if (err.response.status === 400) {
+            if (err.response.data.length > 0) {
+              this.$message.error(err.response.data[0]);
+            }
             console.log(err.response);
           } else {
             console.log(err);
           }
         });
+      },
+      get_course_by_id(){
+        let token = this.check_user();
+        this.$axios({
+          url: `${this.$settings.HOST}cart/order/${this.order_course_id}/`,
+          method: 'get',
+          headers: {
+            Authorization: `jwt ${token}`
+          }
+        }).then(res => {
+          this.course_list.push(res.data);
+          this.total_price = res.data.real_price;
+        }).catch(err => {
+          console.log(err.response);
+        });
       }
     }, created() {
-      this.get_select_course();
+      this.order_course_id = this.$route.params.id;
+      if (this.order_course_id) {
+        this.get_course_by_id();
+      }else {
+        this.get_select_course();
+      }
     }
   }
 </script>

@@ -14,12 +14,17 @@
           <span class="do_more">操作</span>
         </div>
         <div class="cart_course_list">
-          <CartItem v-for="cart in cart_list" :key="cart.id" :course="cart" :checked="checked"/>
+          <CartItem v-for="cart in cart_list" :key="cart.id" :course="cart" :checked="change_all"/>
         </div>
         <div class="cart_footer_row">
-          <span class="cart_select"><label> <el-checkbox v-model="checked"/><span>全选</span></label></span>
+          <span class="cart_select">
+            <label>
+              <el-checkbox v-model="checked" @change="select_all" :indeterminate="isIndeterminate"/>
+              <span>全选</span>
+            </label>
+          </span>
           <span class="cart_delete"><i class="el-icon-delete"/> <span>删除</span></span>
-          <span class="goto_pay"><router-link to="/home/order">去结算</router-link></span>
+          <router-link to="/home/order"><span class="goto_pay">去结算</span></router-link>
           <span class="cart_total">总计：¥{{total_price.toFixed(2)}}</span>
         </div>
       </div>
@@ -39,7 +44,9 @@
       return {
         cart_list: [],
         checked: false,
+        change_all: false,
         total_price: 0,
+        isIndeterminate: false
       }
     },
     methods: {
@@ -62,6 +69,8 @@
           this.$store.commit('add_cart', res.data.cart_list.length);
           this.cart_list = res.data.cart_list;
           this.total_price = res.data.total_price;
+          this.change_status();
+          this.select_all();
         }).catch(err => {
           if (err.response.status === 401) {
             this.$alert('登录已过期，请重新登录', '提示', {
@@ -78,6 +87,37 @@
             console.log(err.response);
           }
         });
+      },
+      select_all() {
+        this.change_all = this.checked;
+      },
+      change_status() {
+        let cart_list_length = this.cart_list.length;
+        let checkedCount = 0;
+        for (let i = 0; i < cart_list_length; i++) {
+          if (this.cart_list[i].selected) {
+            checkedCount += 1;
+          }
+        }
+        if (checkedCount === cart_list_length) {
+          this.isIndeterminate = false;
+          this.checked = true;
+        } else if (checkedCount === 0) {
+          this.isIndeterminate = false;
+          this.checked = false;
+        } else {
+          this.isIndeterminate = true;
+          this.checked = false;
+        }
+      },
+      compute_total_price() {
+        let total_price = 0.0;
+        for (let i = 0; i < this.cart_list.length; i++) {
+          if (this.cart_list[i].selected) {
+            total_price += this.cart_list[i].price
+          }
+        }
+        this.total_price = total_price;
       }
     },
     created() {

@@ -4,6 +4,7 @@ from home.BaseModel import BaseModel
 from user.models import UserInfo
 
 from course.models import Course
+from edu_api.settings.constans import HOST
 
 
 class Order(BaseModel):
@@ -50,6 +51,24 @@ class Order(BaseModel):
     def pay_type_name(self):
         return self.pay_choices[self.pay_type-1][1]
 
+    @property
+    def order_detail_list(self):
+        order_detail_list = OrderDetail.objects.filter(is_show=True, is_delete=False, order_id=self.id)
+
+        data_list = []
+        for order_detail in order_detail_list:
+            data_list.append({
+                'id': order_detail.id,
+                'course_img': order_detail.course_img,
+                'course_name': order_detail.course_name,
+                'discount_name': order_detail.discount_name,
+                'expire': order_detail.expire,
+                'price': order_detail.price,
+                'real_price': order_detail.real_price
+            })
+
+        return data_list
+
 
 class OrderDetail(BaseModel):
     """
@@ -68,4 +87,12 @@ class OrderDetail(BaseModel):
         verbose_name_plural = "订单详情"
 
     def __str__(self):
+        return self.course.name
+
+    @property
+    def course_img(self):
+        return f'{HOST}{self.course.course_img.url}'
+
+    @property
+    def course_name(self):
         return self.course.name

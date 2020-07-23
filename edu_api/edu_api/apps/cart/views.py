@@ -192,3 +192,19 @@ class CartViewSet(ViewSet):
                 total_price += real_expire_price
 
         return Response({"course_list": data, "total_price": total_price, "message": '获取成功'})
+
+    def get_course_by_id(self, request, *args, **kwargs):
+        course_id = kwargs.get('id')
+        course = Course.objects.get(is_show=True, is_delete=False, pk=course_id)
+        real_expire_price = course.real_expire_price(0)
+        data = {
+            "course_img": f'{HOST}{course.course_img.url}',
+            "name": course.name,
+            "id": course.id,
+            "expire_text": "永久有效",
+            "real_price": float(f'{real_expire_price:.2f}'),
+            "price": float(f'{course.price:.2f}'),
+            "discount_name": course.discount_name,
+        }
+
+        return Response(data)
